@@ -103,7 +103,7 @@ public class GameManager : Singleton<GameManager>
         {
             case TurnType.PlayerA:
                 Debug.Log("Player A turn");
-
+                blockController.OnBlockClickedDelegate = null;
                 blockController.OnBlockClickedDelegate = (row, col) =>
                 {
                     if (SetNewBoardValue(PlayerType.PlayerA, row, col))
@@ -125,6 +125,21 @@ public class GameManager : Singleton<GameManager>
                 Debug.Log("Player B turn");
                 blockController.OnBlockClickedDelegate = null;
                 // TODO: AI에게 입력 받기
+                blockController.OnBlockClickedDelegate = (row, col) =>
+                {
+                    if (SetNewBoardValue(PlayerType.PlayerB, row, col))
+                    {
+                        var gameResult = CheckGameResult();
+                        
+                        if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
+                        else EndGame(gameResult);
+                    }
+
+                    else
+                    {
+                        // TODO: 이미 있는 곳을 터치했을 때 처리
+                    }
+                };
                 
                 break;
         }
