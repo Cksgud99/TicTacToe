@@ -123,6 +123,7 @@ public class GameManager : Singleton<GameManager>
                 break;
             case TurnType.PlayerB:
                 Debug.Log("Player B turn");
+                blockController.OnBlockClickedDelegate = null;
                 // TODO: AI에게 입력 받기
                 
                 break;
