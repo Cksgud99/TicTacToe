@@ -60,14 +60,21 @@ public class GameManager : Singleton<GameManager>
     /// <returns>False가 반환되면 할당할 수 없음, True는 할당이 완료됨</returns>
     private bool SetNewBoardValue(PlayerType playerType, int row, int col)
     {
-        if (_board[row, col] != PlayerType.None) return false;
+        if (playerType == PlayerType.PlayerA)
+        {
+            _board[row, col] = playerType;
+            blockController.PlaceMarker(Block.MarkerType.O, row, col);
+            return true;
+        }
         
-        _board[row, col] = playerType;
-        
-        
-        
-        blockController.PlaceMarker(playerType == PlayerType.PlayerA ? Block.MarkerType.O : Block.MarkerType.X, row, col);
-        return true;
+        else if (playerType == PlayerType.PlayerB)
+        {
+            _board[row, col] = playerType;
+            blockController.PlaceMarker(Block.MarkerType.X, row, col);
+            return true;
+        }
+
+        return false;
     }
 
     private void SetTurn(TurnType turnType)
@@ -75,12 +82,11 @@ public class GameManager : Singleton<GameManager>
         switch (turnType)
         {
             case TurnType.PlayerA:
-                // TODO: 플레이어에게 입력 받기
+                Debug.Log("Player A turn");
 
                 blockController.OnBlockClickedDelegate = (row, col) =>
                 {
-                    // TODO: 1. _board에 내용 반영
-                    // TODO: 2. 화면에 Marker 표시
+                    SetNewBoardValue(PlayerType.PlayerA, row, col);
                 };
                 
                 break;
