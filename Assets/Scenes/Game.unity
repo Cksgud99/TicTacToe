@@ -267,9 +267,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1687677511}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 848131907}
+        m_TargetAssemblyTypeName: StartPanelController, Assembly-CSharp
+        m_MethodName: OnClickStartButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 285897971}
   - component: {fileID: 285897970}
   - component: {fileID: 285897969}
+  - component: {fileID: 285897973}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -419,6 +420,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &285897973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285897968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb45a53536a94d439216c77021fb6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPanelController: {fileID: 0}
 --- !u!1001 &351080170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -823,6 +837,7 @@ GameObject:
   - component: {fileID: 848131904}
   - component: {fileID: 848131906}
   - component: {fileID: 848131905}
+  - component: {fileID: 848131907}
   m_Layer: 5
   m_Name: Start Panel
   m_TagString: Untagged
@@ -847,7 +862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1800, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848131905
@@ -888,6 +903,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848131903}
   m_CullTransparentMesh: 1
+--- !u!114 &848131907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848131903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97ded7046342c1499997d21f012fab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &922411023 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6987787092551602728, guid: 161a74efc956aa144a37f0c11cd26001, type: 3}
@@ -1108,7 +1135,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: "\uC2DC\uC791"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c66fd6d2d43e7b343a7998c2e59b7ca2, type: 2}
   m_sharedMaterial: {fileID: 369137550616679361, guid: c66fd6d2d43e7b343a7998c2e59b7ca2, type: 2}
@@ -1361,7 +1388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockController: {fileID: 821734828}
-  startPanel: {fileID: 848131903}
 --- !u!4 &1687677512
 Transform:
   m_ObjectHideFlags: 0

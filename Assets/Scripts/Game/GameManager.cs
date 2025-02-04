@@ -8,7 +8,6 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private BlockController blockController;
-    [SerializeField] private GameObject startPanel;
     
     private enum PlayerType { None, PlayerA, PlayerB }
     private PlayerType[,] _board;
@@ -47,8 +46,6 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartGame()
     {
-        startPanel.SetActive(false);        // TODO: 테스트 코드, 나중에 삭제 예정
-        
         SetTurn(TurnType.PlayerA);
     }
 
