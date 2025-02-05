@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb45a53536a94d439216c77021fb6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPanelController: {fileID: 0}
+  startPanelController: {fileID: 848131907}
 --- !u!1001 &351080170
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class PanelController : MonoBehaviour
     private RectTransform _rectTransform;
     private Vector2 _hideAnchoredPosition;
 
-    private void Start()
+    private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
         _hideAnchoredPosition = _rectTransform.anchoredPosition;
