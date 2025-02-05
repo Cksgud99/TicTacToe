@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private BlockController blockController;
     [SerializeField] private PanelManager panelManager;
+
+    [SerializeField] private GameObject playerTurnUI;
+    [SerializeField] private Image playerAImage;
+    [SerializeField] private Image playerBImage;
     
     public enum PlayerType { None, PlayerA, PlayerB }
     private PlayerType[,] _board;
@@ -40,6 +45,9 @@ public class GameManager : Singleton<GameManager>
         // Block 초기화
         blockController.InitBlocks();
         
+        //Player Turn UI 비활성화
+        playerTurnUI.SetActive(false);
+        
         // Start Panel 표시
         panelManager.ShowPanel(PanelManager.PanelType.StartPanel);
     }
@@ -49,6 +57,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartGame()
     {
+        playerTurnUI.SetActive(true);
         SetTurn(TurnType.PlayerA);
     }
 
@@ -103,6 +112,9 @@ public class GameManager : Singleton<GameManager>
         {
             case TurnType.PlayerA:
                 Debug.Log("Player A turn");
+                playerAImage.color = new Color32(0, 0, 0, 255);
+                playerBImage.color = new Color32(0, 0, 0, 140);
+                
                 blockController.OnBlockClickedDelegate = null;
                 blockController.OnBlockClickedDelegate = (row, col) =>
                 {
@@ -123,6 +135,9 @@ public class GameManager : Singleton<GameManager>
             
             case TurnType.PlayerB:
                 Debug.Log("Player B turn");
+                playerAImage.color = new Color32(0, 0, 0, 140);
+                playerBImage.color = new Color32(0, 0, 0, 255);
+                
                 blockController.OnBlockClickedDelegate = null;
                 // TODO: AI에게 입력 받기
                 blockController.OnBlockClickedDelegate = (row, col) =>
