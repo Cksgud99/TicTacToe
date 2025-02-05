@@ -50,7 +50,6 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartGame()
     {
-        
         SetTurn(TurnType.PlayerA);
     }
 
@@ -58,7 +57,7 @@ public class GameManager : Singleton<GameManager>
     /// 게임 오버시 호출되는 함수
     /// gameResult에 따라 결과 출력
     /// </summary>
-    /// <param name="ganeResult">win, lose, draw</param>
+    /// <param name="gameResult">win, lose, draw</param>
     private void EndGame(GameResult gameResult)
     {
         // TODO: 나중에 구현!
@@ -121,8 +120,8 @@ public class GameManager : Singleton<GameManager>
                         // TODO: 이미 있는 곳을 터치했을 때 처리
                     }
                 };
-                
                 break;
+            
             case TurnType.PlayerB:
                 Debug.Log("Player B turn");
                 blockController.OnBlockClickedDelegate = null;
@@ -142,7 +141,6 @@ public class GameManager : Singleton<GameManager>
                         // TODO: 이미 있는 곳을 터치했을 때 처리
                     }
                 };
-                
                 break;
         }
     }

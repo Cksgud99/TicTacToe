@@ -6,8 +6,10 @@ using UnityEngine;
 public class PanelManager : MonoBehaviour
 {
     [SerializeField] private PanelController startPanelController;
+    [SerializeField] private PanelController confirmPanelController;
+    [SerializeField] private PanelController settingsPanelController;
 
-    public enum PanelType { StartPanel, WinPanel, DrawPanel ,LosePanel }
+    public enum PanelType { StartPanel, ConfirmPanel, SettingsPanel }
 
     private PanelController _currentPanelController;
     
@@ -22,11 +24,11 @@ public class PanelManager : MonoBehaviour
             case PanelType.StartPanel:
                 ShowPanelController(startPanelController);
                 break;
-            case PanelType.WinPanel:
+            case PanelType.ConfirmPanel:
+                ShowPanelController(confirmPanelController);
                 break;
-            case PanelType.DrawPanel:
-                break;
-            case PanelType.LosePanel:
+            case PanelType.SettingsPanel:
+                ShowPanelController(settingsPanelController);
                 break;
         }
     }
@@ -50,5 +52,4 @@ public class PanelManager : MonoBehaviour
         });
         _currentPanelController = panelController;
     }
-    
 }
