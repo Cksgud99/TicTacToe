@@ -49,6 +49,12 @@ public class GameManager : Singleton<GameManager>
             settingsPanelObject.GetComponent<PanelController>().Show();
         }
     }
+
+    public void OpenConfirmPanel(string message, ConfirmPanelController.OnConfirmButtonClick onConfirmButtonClick)
+    {
+        var confirmPanelObject = Instantiate(confirmPanel, _canvas.transform);
+        confirmPanelObject.GetComponent<ConfirmPanelController>().Show(message, onConfirmButtonClick);
+    }
     
     /// <summary>
     /// 게임 시작
