@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class PopupPanelController : Singleton<PopupPanelController>
@@ -21,10 +22,10 @@ public class PopupPanelController : Singleton<PopupPanelController>
     {
         _canvasGroup = GetComponent<CanvasGroup>();
         
-        ClosePanel(false);
+        Hide(false);
     }
 
-    public void ShowPanel(string content, string confirmButtonText, bool animation, Action confirmAction)
+    public void Show(string content, string confirmButtonText, bool animation, Action confirmAction)
     {
         gameObject.SetActive(true);
         
@@ -48,11 +49,11 @@ public class PopupPanelController : Singleton<PopupPanelController>
         confirmButton.onClick.AddListener(() =>
         {
             confirmAction();
-            ClosePanel(true);
+            Hide(true);
         });
     }
     
-    public void ClosePanel(bool animation)
+    public void Hide(bool animation)
     {
         if (animation)
         {
@@ -74,5 +75,10 @@ public class PopupPanelController : Singleton<PopupPanelController>
         
             gameObject.SetActive(false);
         }
+    }
+
+    protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        
     }
 }

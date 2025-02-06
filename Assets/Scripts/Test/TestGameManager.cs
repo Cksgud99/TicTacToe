@@ -6,7 +6,7 @@ public class TestGameManager : MonoBehaviour
 {
     public void Open()
     {
-        PopupPanelController.Instance.ShowPanel("Hello","OK", true ,() =>
+        PopupPanelController.Instance.Show("Hello","OK", true ,() =>
         {
             Debug.Log("OK 클릭!!");
         });
