@@ -151,24 +151,22 @@ public class GameManager : Singleton<GameManager>
             
             case TurnType.PlayerB:
                 _gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnB);
-                
-                _blockController.OnBlockClickedDelegate = null;
-                // TODO: AI에게 입력 받기
-                _blockController.OnBlockClickedDelegate = (row, col) =>
-                {
-                    if (SetNewBoardValue(PlayerType.PlayerB, row, col))
-                    {
-                        var gameResult = CheckGameResult();
-                        
-                        if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
-                        else EndGame(gameResult);
-                    }
 
-                    else
-                    {
-                        // TODO: 이미 있는 곳을 터치했을 때 처리
-                    }
-                };
+                var result = AIController.FindNextMove(_board);
+                
+                if (SetNewBoardValue(PlayerType.PlayerB, result.row, result.col))
+                {
+                    var gameResult = CheckGameResult();
+                        
+                    if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
+                    else EndGame(gameResult);
+                }
+
+                else
+                {
+                    // TODO: 이미 있는 곳을 터치했을 때 처리
+                }
+
                 break;
         }
     }
