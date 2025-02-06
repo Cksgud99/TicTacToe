@@ -8,9 +8,8 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private BlockController blockController;
-    [SerializeField] private PanelManager panelManager;
-    [SerializeField] private GameUIController gameUIController;
+    private BlockController _blockController;
+    private GameUIController _gameUIController;
     
     public enum PlayerType { None, PlayerA, PlayerB }
     private PlayerType[,] _board;
@@ -40,10 +39,10 @@ public class GameManager : Singleton<GameManager>
         _board = new PlayerType[3, 3];
         
         // Block 초기화
-        blockController.InitBlocks();
+        _blockController.InitBlocks();
         
         // Game UI 초기화
-        gameUIController.SetGameUIMode(GameUIController.GameUIMode.Init);
+        _gameUIController.SetGameUIMode(GameUIController.GameUIMode.Init);
         
         // 게임 스타트
         StartGame();
@@ -64,7 +63,7 @@ public class GameManager : Singleton<GameManager>
     /// <param name="gameResult">win, lose, draw</param>
     private void EndGame(GameResult gameResult)
     {
-        gameUIController.SetGameUIMode(GameUIController.GameUIMode.GameOver);
+        _gameUIController.SetGameUIMode(GameUIController.GameUIMode.GameOver);
         
         // TODO: 나중에 구현!
         switch (gameResult)
@@ -90,14 +89,14 @@ public class GameManager : Singleton<GameManager>
         if (playerType == PlayerType.PlayerA)
         {
             _board[row, col] = playerType;
-            blockController.PlaceMarker(Block.MarkerType.O, row, col);
+            _blockController.PlaceMarker(Block.MarkerType.O, row, col);
             return true;
         }
         
         else if (playerType == PlayerType.PlayerB)
         {
             _board[row, col] = playerType;
-            blockController.PlaceMarker(Block.MarkerType.X, row, col);
+            _blockController.PlaceMarker(Block.MarkerType.X, row, col);
             return true;
         }
 
@@ -109,10 +108,10 @@ public class GameManager : Singleton<GameManager>
         switch (turnType)
         {
             case TurnType.PlayerA:
-                gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnA);
+                _gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnA);
                 
-                blockController.OnBlockClickedDelegate = null;
-                blockController.OnBlockClickedDelegate = (row, col) =>
+                _blockController.OnBlockClickedDelegate = null;
+                _blockController.OnBlockClickedDelegate = (row, col) =>
                 {
                     if (SetNewBoardValue(PlayerType.PlayerA, row, col))
                     {
@@ -130,11 +129,11 @@ public class GameManager : Singleton<GameManager>
                 break;
             
             case TurnType.PlayerB:
-                gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnB);
+                _gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnB);
                 
-                blockController.OnBlockClickedDelegate = null;
+                _blockController.OnBlockClickedDelegate = null;
                 // TODO: AI에게 입력 받기
-                blockController.OnBlockClickedDelegate = (row, col) =>
+                _blockController.OnBlockClickedDelegate = (row, col) =>
                 {
                     if (SetNewBoardValue(PlayerType.PlayerB, row, col))
                     {
@@ -191,7 +190,7 @@ public class GameManager : Singleton<GameManager>
             if (_board[row, 0] == playerType && _board[row, 1] == playerType && _board[row, 2] == playerType)
             {
                 (int, int)[] blocks = { (row, 0), (row, 1), (row, 2) };
-                blockController.SetBlockColor(playerType, blocks);
+                _blockController.SetBlockColor(playerType, blocks);
                 return true;
             }
 
@@ -203,7 +202,7 @@ public class GameManager : Singleton<GameManager>
             if (_board[0, col] == playerType && _board[1, col] == playerType && _board[2, col] == playerType)
             {
                 (int, int)[] blocks = { (0, col), (1, col), (2, col) };
-                blockController.SetBlockColor(playerType, blocks);
+                _blockController.SetBlockColor(playerType, blocks);
                 return true;
             }
         }
@@ -212,14 +211,14 @@ public class GameManager : Singleton<GameManager>
         if (_board[0, 0] == playerType && _board[1, 1] == playerType && _board[2, 2] == playerType)
         {
             (int, int)[] blocks = { (0, 0), (1, 1), (2, 2) };
-            blockController.SetBlockColor(playerType, blocks);
+            _blockController.SetBlockColor(playerType, blocks);
             return true;
         }
 
         if (_board[0, 2] == playerType && _board[1, 1] == playerType && _board[2, 0] == playerType)
         {
             (int, int)[] blocks = { (0, 2), (1, 1), (2, 0) };
-            blockController.SetBlockColor(playerType, blocks);
+            _blockController.SetBlockColor(playerType, blocks);
             return true;
         }
 
