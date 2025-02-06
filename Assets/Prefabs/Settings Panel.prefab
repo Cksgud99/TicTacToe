@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 5816061822941823496}
   - component: {fileID: 2943664287108966475}
   - component: {fileID: 5555583506981164714}
+  - component: {fileID: 8649777847755716322}
   m_Layer: 5
   m_Name: Settings Panel
   m_TagString: Untagged
@@ -857,6 +858,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc1b98dc400a7540bb9bf6f1758299d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelRectTransform: {fileID: 1588799515552996368}
+--- !u!225 &8649777847755716322
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5052270262078377784}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8075344828925025379
 GameObject:
   m_ObjectHideFlags: 0

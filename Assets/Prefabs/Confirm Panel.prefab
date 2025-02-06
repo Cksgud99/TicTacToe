@@ -623,6 +623,7 @@ GameObject:
   - component: {fileID: 3759450764336587377}
   - component: {fileID: 7399724521381804486}
   - component: {fileID: 8848373655901540407}
+  - component: {fileID: 7156787871771949732}
   m_Layer: 5
   m_Name: Confirm Panel
   m_TagString: Untagged
@@ -700,4 +701,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812792d4d4045464e800b0347177fc2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelRectTransform: {fileID: 6886244100183787371}
   messageText: {fileID: 4516686419383852087}
+--- !u!225 &7156787871771949732
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052489056813437089}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
