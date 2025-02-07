@@ -131,7 +131,6 @@ public class GameManager : Singleton<GameManager>
             case TurnType.PlayerA:
                 _gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnA);
                 
-                _blockController.OnBlockClickedDelegate = null;
                 _blockController.OnBlockClickedDelegate = (row, col) =>
                 {
                     if (SetNewBoardValue(PlayerType.PlayerA, row, col))
@@ -152,21 +151,28 @@ public class GameManager : Singleton<GameManager>
             case TurnType.PlayerB:
                 _gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnB);
 
-                var result = AIController.FindNextMove(_board);
-                
-                if (SetNewBoardValue(PlayerType.PlayerB, result.row, result.col))
-                {
-                    var gameResult = CheckGameResult();
-                        
-                    if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
-                    else EndGame(gameResult);
-                }
+                //var result = AIController.FindNextMove(_board);
+                var result = MinimaxAIController.GetBestMove(_board);
 
+                if (result.HasValue)
+                {
+                    if (SetNewBoardValue(PlayerType.PlayerB, result.Value.row, result.Value.col))
+                    {
+                        var gameResult = CheckGameResult();
+                        
+                        if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
+                        else EndGame(gameResult);
+                    }
+
+                    else
+                    {
+                        // TODO: 이미 있는 곳을 터치했을 때 처리
+                    }
+                }
                 else
                 {
-                    // TODO: 이미 있는 곳을 터치했을 때 처리
+                    EndGame(GameResult.Win);
                 }
-
                 break;
         }
     }
@@ -177,13 +183,55 @@ public class GameManager : Singleton<GameManager>
     /// <returns></returns>
     private GameResult CheckGameResult()
     {
-        if(MinmaxAIController.CheckGameWin(PlayerType.PlayerA, _board)) return GameResult.Win;
-        if(MinmaxAIController.CheckGameWin(PlayerType.PlayerB, _board)) return GameResult.Lose;
-        if(MinmaxAIController.IsAllBlocksPlaced(_board)) return GameResult.Draw;
+        if(MinimaxAIController.CheckGameWin(PlayerType.PlayerA, _board)) return GameResult.Win;
+        if(MinimaxAIController.CheckGameWin(PlayerType.PlayerB, _board)) return GameResult.Lose;
+        if(MinimaxAIController.IsAllBlocksPlaced(_board)) return GameResult.Draw;
         
         return GameResult.None;
     }
 
+    //게임의 승패를 판단하는 함수
+    private bool CheckGameWin(PlayerType playerType)
+    {
+        // 가로로 마커가 일치하는지 확인
+        for (var row = 0; row < _board.GetLength(0); row++)
+        {
+            if (_board[row, 0] == playerType && _board[row, 1] == playerType && _board[row, 2] == playerType)
+            {
+                (int, int)[] blocks = { ( row, 0 ), ( row, 1 ), ( row, 2 ) };
+                _blockController.SetBlockColor(playerType, blocks);
+                return true;
+            }
+        }
+        
+        // 세로로 마커가 일치하는지 확인
+        for (var col = 0; col < _board.GetLength(1); col++)
+        {
+            if (_board[0, col] == playerType && _board[1, col] == playerType && _board[2, col] == playerType)
+            {
+                (int, int)[] blocks = { ( 0, col ), ( 1, col ), ( 2, col ) };
+                _blockController.SetBlockColor(playerType, blocks);
+                return true;
+            }
+        }
+        
+        // 대각선 마커 일치하는지 확인
+        if (_board[0, 0] == playerType && _board[1, 1] == playerType && _board[2, 2] == playerType)
+        {
+            (int, int)[] blocks = { ( 0, 0 ), ( 1, 1 ), ( 2, 2 ) };
+            _blockController.SetBlockColor(playerType, blocks);
+            return true;
+        }
+        if (_board[0, 2] == playerType && _board[1, 1] == playerType && _board[2, 0] == playerType)
+        {
+            (int, int)[] blocks = { ( 0, 2 ), ( 1, 1 ), ( 2, 0 ) };
+            _blockController.SetBlockColor(playerType, blocks);
+            return true;
+        }
+
+        return false;
+    }
+    
     protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Game")
