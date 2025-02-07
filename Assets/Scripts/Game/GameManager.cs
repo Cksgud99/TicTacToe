@@ -183,8 +183,8 @@ public class GameManager : Singleton<GameManager>
     /// <returns></returns>
     private GameResult CheckGameResult()
     {
-        if(MinimaxAIController.CheckGameWin(PlayerType.PlayerA, _board)) return GameResult.Win;
-        if(MinimaxAIController.CheckGameWin(PlayerType.PlayerB, _board)) return GameResult.Lose;
+        if(CheckGameWin(PlayerType.PlayerA)) return GameResult.Win;
+        if(CheckGameWin(PlayerType.PlayerB)) return GameResult.Lose;
         if(MinimaxAIController.IsAllBlocksPlaced(_board)) return GameResult.Draw;
         
         return GameResult.None;
