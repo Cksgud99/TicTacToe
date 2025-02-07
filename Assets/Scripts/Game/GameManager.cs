@@ -177,71 +177,11 @@ public class GameManager : Singleton<GameManager>
     /// <returns></returns>
     private GameResult CheckGameResult()
     {
-        if(CheckGameWin(PlayerType.PlayerA)) return GameResult.Win;
-        if(CheckGameWin(PlayerType.PlayerB)) return GameResult.Lose;
-        if(IsAllBlocksPlaced()) return GameResult.Draw;
+        if(MinmaxAIController.CheckGameWin(PlayerType.PlayerA, _board)) return GameResult.Win;
+        if(MinmaxAIController.CheckGameWin(PlayerType.PlayerB, _board)) return GameResult.Lose;
+        if(MinmaxAIController.IsAllBlocksPlaced(_board)) return GameResult.Draw;
         
         return GameResult.None;
-    }
-    
-    /// <summary>
-    /// 모든 마커가 보드에 배치 되었는지 확인하는 함수
-    /// </summary>
-    /// <returns>True: 모두 배치</returns>
-    private bool IsAllBlocksPlaced()
-    {
-        for (var row = 0; row < _board.GetLength(0); row++)
-        {
-            for (var col = 0; col < _board.GetLength(1); col++)
-            {
-                if (_board[row, col] == PlayerType.None) return false;
-            }
-        }
-        return true;
-    }
-    
-    // 게임의 승패를 판단하는 함수
-    private bool CheckGameWin(PlayerType playerType)
-    {
-        // 가로로 마커가 일치하는지 확인
-        for (var row = 0; row < _board.GetLength(0); row++)
-        {
-            if (_board[row, 0] == playerType && _board[row, 1] == playerType && _board[row, 2] == playerType)
-            {
-                (int, int)[] blocks = { (row, 0), (row, 1), (row, 2) };
-                _blockController.SetBlockColor(playerType, blocks);
-                return true;
-            }
-
-        }
-        
-        // 세로로 마커가 일치하는지 확인
-        for (var col = 0; col < _board.GetLength(1); col++)
-        {
-            if (_board[0, col] == playerType && _board[1, col] == playerType && _board[2, col] == playerType)
-            {
-                (int, int)[] blocks = { (0, col), (1, col), (2, col) };
-                _blockController.SetBlockColor(playerType, blocks);
-                return true;
-            }
-        }
-        
-        // 대각선으로 마커가 일치하는지 확인
-        if (_board[0, 0] == playerType && _board[1, 1] == playerType && _board[2, 2] == playerType)
-        {
-            (int, int)[] blocks = { (0, 0), (1, 1), (2, 2) };
-            _blockController.SetBlockColor(playerType, blocks);
-            return true;
-        }
-
-        if (_board[0, 2] == playerType && _board[1, 1] == playerType && _board[2, 0] == playerType)
-        {
-            (int, int)[] blocks = { (0, 2), (1, 1), (2, 0) };
-            _blockController.SetBlockColor(playerType, blocks);
-            return true;
-        }
-
-        return false;
     }
 
     protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
