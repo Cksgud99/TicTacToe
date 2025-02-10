@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Block : MonoBehaviour
@@ -69,6 +70,10 @@ public class Block : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         _onBlockClicked?.Invoke(_blockIndex);
     }
 }
