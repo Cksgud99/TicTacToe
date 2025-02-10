@@ -30,9 +30,11 @@ public class GameManager : Singleton<GameManager>
     }
 
     public enum GameType { SinglePlay, DualPlay }
+    private GameType _gameType;
     
     public void ChangeToGameScene(GameType gameType)
     {
+        _gameType = gameType;
         SceneManager.LoadScene("Game");
     }
 
@@ -150,27 +152,47 @@ public class GameManager : Singleton<GameManager>
             
             case TurnType.PlayerB:
                 _gameUIController.SetGameUIMode(GameUIController.GameUIMode.TurnB);
-                
-                var result = MinimaxAIController.GetBestMove(_board);
 
-                if (result.HasValue)
+                if (_gameType == GameType.SinglePlay)
                 {
-                    if (SetNewBoardValue(PlayerType.PlayerB, result.Value.row, result.Value.col))
-                    {
-                        var gameResult = CheckGameResult();
-                        
-                        if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
-                        else EndGame(gameResult);
-                    }
+                    var result = MinimaxAIController.GetBestMove(_board);
 
+                    if (result.HasValue)
+                    {
+                        if (SetNewBoardValue(PlayerType.PlayerB, result.Value.row, result.Value.col))
+                        {
+                            var gameResult = CheckGameResult();
+                        
+                            if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
+                            else EndGame(gameResult);
+                        }
+
+                        else
+                        {
+                            // TODO: 이미 있는 곳을 터치했을 때 처리
+                        }
+                    }
                     else
                     {
-                        // TODO: 이미 있는 곳을 터치했을 때 처리
+                        EndGame(GameResult.Win);
                     }
                 }
-                else
+                else if (_gameType == GameType.DualPlay)
                 {
-                    EndGame(GameResult.Win);
+                    _blockController.OnBlockClickedDelegate = (row, col) =>
+                    {
+                        if (SetNewBoardValue(PlayerType.PlayerB, row, col))
+                        {
+                            var gameResult = CheckGameResult();
+                        
+                            if (gameResult == GameResult.None) SetTurn(TurnType.PlayerA);
+                            else EndGame(gameResult);
+                        }
+                        else
+                        {
+                            // TODO: 이미 있는 곳을 터치했을 때 처리
+                        }
+                    };
                 }
                 break;
         }
