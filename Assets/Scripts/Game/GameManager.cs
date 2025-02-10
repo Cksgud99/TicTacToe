@@ -72,6 +72,8 @@ public class GameManager : Singleton<GameManager>
         // Game UI 초기화
         _gameUIController.SetGameUIMode(GameUIController.GameUIMode.Init);
         
+        Debug.Log($"Game Started in {_gameType} mode");
+        
         // 턴 시작
         SetTurn(TurnType.PlayerA);
     }
