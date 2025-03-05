@@ -16,6 +16,14 @@ public struct SigninResult
     public int result;
 }
 
+public struct ScoreResult
+{
+    public string id;
+    public string username;
+    public string nickname;
+    public int score;
+}
+
 public class SigninPanelController : MonoBehaviour
 {
     [SerializeField] private TMP_InputField usernameInputField;

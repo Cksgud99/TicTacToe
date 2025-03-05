@@ -19,4 +19,9 @@ public class MainPanelController : MonoBehaviour
     {
         GameManager.Instance.OpenSettingsPanel();
     }
+
+    public void OnClickScoreButton()
+    {
+        NetworkManager.Instance.GetScore();
+    }
 }
