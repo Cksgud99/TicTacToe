@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -28,6 +29,14 @@ public class SigninPanelController : MonoBehaviour
 {
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private TMP_InputField passwordInputField;
+
+    private void Start()
+    {
+        StartCoroutine(NetworkManager.Instance.GetScore((userInfo) =>
+        {
+            Destroy(gameObject);
+        }, null));
+    }
 
     public void OnClickSigninButton()
     {

@@ -38,7 +38,6 @@ public class GameManager : Singleton<GameManager>
     {
         // 로그인
         OpenSigninPanel();
-        
     }
 
     public void ChangeToGameScene(GameType gameType)
